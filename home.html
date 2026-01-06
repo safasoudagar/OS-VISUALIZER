@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home | OS Visualizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: #e5e7eb;
+      padding-top: 80px;
+    }
+
+    /* Top bar */
+    .top-bar {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .top-bar button {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #1e293b;
+      color: #e5e7eb;
+      font-size: 13px;
+    }
+
+    .top-bar button:hover {
+      background: #334155;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: #f8fafc;
+    }
+
+    .role {
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 14px;
+      padding: 30px;
+      width: 280px;
+      cursor: pointer;
+      box-shadow: 0 20px 40px rgba(63, 62, 62, 0.6);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      color: #f8fafc;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <button onclick="goBack()">⬅ Back</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="container">
+    <h1>Welcome to OS Visualizer</h1>
+    <p class="role" id="userInfo"></p>
+
+    <div class="cards">
+      <div class="card" onclick="openDining()">
+        <h2>Dining Philosophers</h2>
+        <p>Visualize philosophers competing for shared resources.</p>
+      </div>
+
+      <div class="card" onclick="openProducer()">
+        <h2>Producer–Consumer</h2>
+        <p>Simulate bounded buffer synchronization.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- AUTH GUARD ---------- */
+    if (!localStorage.getItem("loggedIn")) {
+      alert("Please login first");
+      window.location.href = "index.html";
+    }
+
+    /* ---------- USER INFO ---------- */
+    const email = localStorage.getItem("userEmail");
+    const role = localStorage.getItem("role");
+    document.getElementById("userInfo").textContent =
+      `Logged in as ${email} (${role})`;
+
+    /* ---------- NAVIGATION ---------- */
+    function openDining() {
+      window.location.href = "https://dining-philosopher.onrender.com";
+    }
+
+    function openProducer() {
+      window.location.href = "https://producer-consumer-os.onrender.com";
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("role");
+      alert("Logged out successfully");
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
